@@ -1,0 +1,10 @@
+package com.canteen.repository;
+
+import com.canteen.model.Transaction;
+import com.canteen.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+    List<Transaction> findByUserOrderByCreatedAtDesc(User user);
+}

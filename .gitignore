@@ -1,0 +1,22 @@
+# Backend
+Backend/target/
+Backend/.mvn/
+Backend/*.iml
+Backend/.classpath
+Backend/.project
+Backend/.settings/
+
+# Frontend
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.vite/
+
+# IDE
+.idea/
+*.iml
+.vscode/settings.json
+.DS_Store
+Thumbs.db
+
+# Secrets — never commit real passwords
+Backend/src/main/resources/application-prod.properties
