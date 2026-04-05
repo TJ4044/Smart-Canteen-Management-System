@@ -168,10 +168,10 @@ This system is best suited for:
 
 ## Author
 
-**Your Name**
+**Tanishq Jagtap**
 B.Tech Computer Science
 
-- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- Email: your.email@example.com
+- GitHub: [@TJ4044](https://github.com/TJ4044)
+- Email: jagtaptanishq@gmail.com
 
 Built with ❤️ using Java Spring Boot + React.js to bring tech into everyday dining!
