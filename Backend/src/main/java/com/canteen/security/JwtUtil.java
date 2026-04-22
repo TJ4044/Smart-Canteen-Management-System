@@ -1,5 +1,4 @@
 package com.canteen.security;
-
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,24 +9,15 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
+    @Value("${app.jwt.secret}") private String secret;
+    @Value("${app.jwt.expiration}") private long expiration;
 
-    @Value("${app.jwt.secret}")
-    private String secret;
-
-    @Value("${app.jwt.expiration}")
-    private long expiration;
-
-    private Key key() {
-        return Keys.hmacShaKeyFor(secret.getBytes());
-    }
+    private Key key() { return Keys.hmacShaKeyFor(secret.getBytes()); }
 
     public String generateToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
+        return Jwts.builder().setSubject(email).setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
+                .signWith(key(), SignatureAlgorithm.HS256).compact();
     }
 
     public String extractEmail(String token) {
@@ -35,10 +25,10 @@ public class JwtUtil {
                 .parseClaimsJws(token).getBody().getSubject();
     }
 
-    public boolean isValid(String token, UserDetails userDetails) {
+    public boolean isValid(String token, UserDetails ud) {
         String email = extractEmail(token);
         Date exp = Jwts.parserBuilder().setSigningKey(key()).build()
                 .parseClaimsJws(token).getBody().getExpiration();
-        return email.equals(userDetails.getUsername()) && exp.after(new Date());
+        return email.equals(ud.getUsername()) && exp.after(new Date());
     }
 }

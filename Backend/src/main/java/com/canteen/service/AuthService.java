@@ -1,4 +1,5 @@
 package com.canteen.service;
+
 import com.canteen.dto.DTO.*;
 import com.canteen.model.User;
 import com.canteen.repository.UserRepository;
@@ -14,12 +15,8 @@ public class AuthService {
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
 
-    public AuthService(UserRepository userRepo, PasswordEncoder encoder,
-                       AuthenticationManager authManager, JwtUtil jwtUtil) {
-        this.userRepo = userRepo;
-        this.encoder = encoder;
-        this.authManager = authManager;
-        this.jwtUtil = jwtUtil;
+    public AuthService(UserRepository u, PasswordEncoder e, AuthenticationManager a, JwtUtil j) {
+        this.userRepo=u; this.encoder=e; this.authManager=a; this.jwtUtil=j;
     }
 
     public AuthResponse register(RegisterRequest req) {

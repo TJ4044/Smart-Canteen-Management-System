@@ -13,13 +13,8 @@ import java.io.IOException;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
-
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    @Lazy
-    private UserDetailsService userDetailsService;
+    @Autowired private JwtUtil jwtUtil;
+    @Autowired @Lazy private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -32,8 +27,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails ud = userDetailsService.loadUserByUsername(email);
                     if (jwtUtil.isValid(token, ud)) {
-                        UsernamePasswordAuthenticationToken auth =
-                            new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
+                        var auth = new UsernamePasswordAuthenticationToken(ud, null, ud.getAuthorities());
                         auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                         SecurityContextHolder.getContext().setAuthentication(auth);
                     }

@@ -21,16 +21,9 @@ import java.util.List;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    @Lazy
-    private JwtFilter jwtFilter;
-
-    @Value("${app.cors.allowed-origin}")
-    private String allowedOrigin;
+    @Autowired private UserRepository userRepository;
+    @Autowired @Lazy private JwtFilter jwtFilter;
+    @Value("${app.cors.allowed-origin}") private String allowedOrigin;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -68,7 +61,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider p = new DaoAuthenticationProvider();
+        var p = new DaoAuthenticationProvider();
         p.setUserDetailsService(userDetailsService());
         p.setPasswordEncoder(passwordEncoder());
         return p;
@@ -80,7 +73,5 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
 }

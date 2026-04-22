@@ -7,16 +7,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/api/wallet")
+@RestController @RequestMapping("/api/wallet")
 public class WalletController {
     private final WalletService walletService;
-    public WalletController(WalletService walletService) { this.walletService = walletService; }
+    public WalletController(WalletService w) { this.walletService = w; }
 
     @GetMapping
-    public ResponseEntity<Map<String,Object>> getBalance(Authentication auth) { return ResponseEntity.ok(walletService.getBalance(auth.getName())); }
+    public ResponseEntity<Map<String,Object>> getBalance(Authentication auth) {
+        return ResponseEntity.ok(walletService.getBalance(auth.getName()));
+    }
     @PostMapping("/recharge")
-    public ResponseEntity<Map<String,Object>> recharge(Authentication auth, @RequestBody RechargeRequest req) { return ResponseEntity.ok(walletService.recharge(auth.getName(), req)); }
+    public ResponseEntity<Map<String,Object>> recharge(Authentication auth,
+                                                        @RequestBody RechargeRequest req) {
+        return ResponseEntity.ok(walletService.recharge(auth.getName(), req));
+    }
     @GetMapping("/transactions")
-    public ResponseEntity<List<TransactionResponse>> transactions(Authentication auth) { return ResponseEntity.ok(walletService.getTransactions(auth.getName())); }
+    public ResponseEntity<List<TransactionResponse>> transactions(Authentication auth) {
+        return ResponseEntity.ok(walletService.getTransactions(auth.getName()));
+    }
 }

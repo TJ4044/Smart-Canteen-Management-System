@@ -11,7 +11,7 @@ export function ToastProvider({ children }) {
     setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 3500)
   }, [])
 
-  const icons = { success: '✅', error: '❌', info: 'ℹ️' }
+  const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' }
 
   return (
     <ToastContext.Provider value={show}>

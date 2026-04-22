@@ -1,4 +1,5 @@
 package com.canteen.service;
+
 import com.canteen.dto.DTO.*;
 import com.canteen.model.User;
 import com.canteen.repository.*;
@@ -14,12 +15,8 @@ public class AdminService {
     private final FoodItemRepository foodRepo;
     private final PasswordEncoder encoder;
 
-    public AdminService(UserRepository userRepo, OrderRepository orderRepo,
-                        FoodItemRepository foodRepo, PasswordEncoder encoder) {
-        this.userRepo = userRepo;
-        this.orderRepo = orderRepo;
-        this.foodRepo = foodRepo;
-        this.encoder = encoder;
+    public AdminService(UserRepository u, OrderRepository o, FoodItemRepository f, PasswordEncoder e) {
+        this.userRepo=u; this.orderRepo=o; this.foodRepo=f; this.encoder=e;
     }
 
     public AdminStats getStats() {

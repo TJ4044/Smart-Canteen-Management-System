@@ -1,4 +1,5 @@
 package com.canteen.service;
+
 import com.canteen.dto.DTO.*;
 import com.canteen.model.*;
 import com.canteen.repository.*;
@@ -13,9 +14,8 @@ public class WalletService {
     private final UserRepository userRepo;
     private final TransactionRepository txnRepo;
 
-    public WalletService(UserRepository userRepo, TransactionRepository txnRepo) {
-        this.userRepo = userRepo;
-        this.txnRepo = txnRepo;
+    public WalletService(UserRepository u, TransactionRepository t) {
+        this.userRepo = u; this.txnRepo = t;
     }
 
     @Transactional
@@ -25,11 +25,10 @@ public class WalletService {
         User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
         user.setWalletBalance(user.getWalletBalance() + req.getAmount());
         userRepo.save(user);
-        Transaction t = Transaction.builder().user(user)
+        txnRepo.save(Transaction.builder().user(user)
                 .type(Transaction.TransactionType.RECHARGE)
                 .amount(req.getAmount()).description("Wallet recharge")
-                .createdAt(LocalDateTime.now()).build();
-        txnRepo.save(t);
+                .createdAt(LocalDateTime.now()).build());
         return Map.of("walletBalance", user.getWalletBalance(), "message", "Recharge successful");
     }
 

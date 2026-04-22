@@ -6,29 +6,42 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/menu")
+@RestController @RequestMapping("/api/menu")
 public class MenuController {
     private final MenuService menuService;
-    public MenuController(MenuService menuService) { this.menuService = menuService; }
+    public MenuController(MenuService m) { this.menuService = m; }
 
     @GetMapping
-    public ResponseEntity<List<FoodResponse>> getMenu() { return ResponseEntity.ok(menuService.getAllAvailable()); }
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<FoodResponse>> getByCategory(@PathVariable String category) { return ResponseEntity.ok(menuService.getByCategory(category)); }
+    public ResponseEntity<List<FoodResponse>> getMenu() {
+        return ResponseEntity.ok(menuService.getAllAvailable());
+    }
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<FoodResponse>> getAll() { return ResponseEntity.ok(menuService.getAll()); }
+    public ResponseEntity<List<FoodResponse>> getAll() {
+        return ResponseEntity.ok(menuService.getAll());
+    }
+    @GetMapping("/category/{cat}")
+    public ResponseEntity<List<FoodResponse>> byCategory(@PathVariable String cat) {
+        return ResponseEntity.ok(menuService.getByCategory(cat));
+    }
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FoodResponse> create(@RequestBody FoodRequest req) { return ResponseEntity.ok(menuService.create(req)); }
+    public ResponseEntity<FoodResponse> create(@RequestBody FoodRequest req) {
+        return ResponseEntity.ok(menuService.create(req));
+    }
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FoodResponse> update(@PathVariable Long id, @RequestBody FoodRequest req) { return ResponseEntity.ok(menuService.update(id, req)); }
+    public ResponseEntity<FoodResponse> update(@PathVariable Long id, @RequestBody FoodRequest req) {
+        return ResponseEntity.ok(menuService.update(id, req));
+    }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable Long id) { menuService.delete(id); return ResponseEntity.noContent().build(); }
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        menuService.delete(id); return ResponseEntity.noContent().build();
+    }
     @PatchMapping("/{id}/toggle")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<FoodResponse> toggle(@PathVariable Long id) { return ResponseEntity.ok(menuService.toggleAvailability(id)); }
+    public ResponseEntity<FoodResponse> toggle(@PathVariable Long id) {
+        return ResponseEntity.ok(menuService.toggle(id));
+    }
 }
